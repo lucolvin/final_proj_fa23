@@ -22,4 +22,3 @@ while True:
         print("I don't understand that command.")
     print()
 
-print("Goodbye!")
