@@ -40,7 +40,7 @@ def getplayerInput():
     # Does not print the first time the main loop runs
     global firstTime, travelCounter, firstTimeSavannah, environment
     if not firstTime:
-        travelCounter += 1
+        # travelCounter += 1
         # travelCounter to check the player's location for testing should take out later yo
         print(f"You have traveled {travelCounter} times.")
         if travelCounter <= 20:
@@ -59,7 +59,9 @@ def getplayerInput():
     firstTime = False
 
     # Player input
-    playerInput = input("> ")
+    playerInput = input("> ").strip()
+    if playerInput: # Fixes the so travelCounter does not increase when the player enters nothing
+        travelCounter += 1
     return playerInput
 
 
