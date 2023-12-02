@@ -261,4 +261,4 @@ main()
 # TODO make a mini-game that only appears when the player goes a certain direction
 # TODO make a river mini-game
 # TODO make a mini-game that you need to run away from da ferrel monke
-# TODO 
+# TODO make a mini-game that you need to fight da ferrel monke
