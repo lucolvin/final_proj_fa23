@@ -71,33 +71,7 @@ def containsAll(str1, str2):
             return False
     return True
 
-'''
-def getCommand(playerInput):
-    playerInput = playerInput.lower()
-    if containsAll("quit", playerInput) or playerInput == "q":
-        return False
-    elif containsAll("nor", playerInput) or playerInput == "n":
-        clearScreen()
-        print("You go north.")
-    elif containsAll("sou", playerInput) or playerInput == "s":
-        clearScreen()
-        print("You go south.")
-    elif containsAll("eas", playerInput) or playerInput == "e":
-        clearScreen()
-        print("You go east.")
-    elif containsAll("wes", playerInput) or playerInput == "w":
-        clearScreen()
-        print("You go west.")
-    else:
-        clearScreen()
-        print("I don't understand that playerInput.")
-    return True'''
 
-
-# TODO make a mini-game that only appears when the player goes a certain direction
-# TODO make a river mini-game
-# TODO make a mini-game that you need to run away from da ferrel monke
-# TODO 
 
 def getCommand(playerInput):
     # Conversion to lowercase
@@ -282,3 +256,9 @@ def main():
 
 
 main()
+
+
+# TODO make a mini-game that only appears when the player goes a certain direction
+# TODO make a river mini-game
+# TODO make a mini-game that you need to run away from da ferrel monke
+# TODO 
