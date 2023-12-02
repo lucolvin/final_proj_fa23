@@ -3,6 +3,7 @@ import os
 
 # Global variables
 def initializeGlobals():
+    
     # Global variable to check if it is the first time the main loop runs
     global firstTime
     firstTime = True
@@ -19,7 +20,7 @@ def initializeGlobals():
     global environment
     environment = 'jungle'
 
-# Call the function to initialize the global variables
+# Call initializeGlobals() to init the global variables
 initializeGlobals()
 
 
@@ -40,9 +41,9 @@ def getplayerInput():
     # Does not print the first time the main loop runs
     global firstTime, travelCounter, firstTimeSavannah, environment
     if not firstTime:
-        travelCounter += 1
+        # travelCounter += 1
         # travelCounter to check the player's location for testing should take out later yo
-        print(f"You have traveled {travelCounter} times.")
+        print(f"\nYou have traveled {travelCounter} times.\n")
         if travelCounter <= 20:
             environment = 'jungle'
             print("You are still in a jungle.")
@@ -58,8 +59,10 @@ def getplayerInput():
         print("What do you want to do?")
     firstTime = False
 
-    # Player input
-    playerInput = input("> ")
+    # Player input uses strip to remove whitespace
+    playerInput = input("> ").strip()
+    if playerInput: # Fix so travelCounter does not increase when the player enters nothing
+        travelCounter += 1
     return playerInput
 
 
@@ -71,33 +74,7 @@ def containsAll(str1, str2):
             return False
     return True
 
-'''
-def getCommand(playerInput):
-    playerInput = playerInput.lower()
-    if containsAll("quit", playerInput) or playerInput == "q":
-        return False
-    elif containsAll("nor", playerInput) or playerInput == "n":
-        clearScreen()
-        print("You go north.")
-    elif containsAll("sou", playerInput) or playerInput == "s":
-        clearScreen()
-        print("You go south.")
-    elif containsAll("eas", playerInput) or playerInput == "e":
-        clearScreen()
-        print("You go east.")
-    elif containsAll("wes", playerInput) or playerInput == "w":
-        clearScreen()
-        print("You go west.")
-    else:
-        clearScreen()
-        print("I don't understand that playerInput.")
-    return True'''
 
-
-# TODO make a mini-game that only appears when the player goes a certain direction
-# TODO make a river mini-game
-# TODO make a mini-game that you need to run away from da ferrel monke
-# TODO 
 
 def getCommand(playerInput):
     # Conversion to lowercase
@@ -111,7 +88,7 @@ def getCommand(playerInput):
     
 
 # 1 in 5 chance to trigger the mini-game should be able to just change the 0 of 0, 4 to 1 for other mini-games
-# this is dumb what was i thinking facepalm
+# this is dumb what was i thinking 🤦
 
     elif containsAll("nor", playerInput) or playerInput == "n":
         if random.randint(0, 4) == 0:  # 1 in 5 chance to trigger mini-game
@@ -158,7 +135,7 @@ def getCommand(playerInput):
     # Exception handling for non-string input
     else:
         clearScreen()
-        print("I don't understand that playerInput.")
+        print("I don't understand that command.")
     return True
 
 
@@ -261,6 +238,7 @@ def main():
     
     # Main loop
     while True:
+        # Calls getPlayerInput() and assigns it to playerInput
         playerInput = getplayerInput()
         # Ends the game if the player has traveled 100 times
         if travelCounter >= 99:
@@ -282,3 +260,9 @@ def main():
 
 
 main()
+
+
+# TODO make a mini-game that only appears when the player goes a certain direction
+# TODO make a river mini-game
+# TODO make a mini-game that you need to run away from da ferrel monke
+# TODO make a mini-game that you need to fight da ferrel monke
