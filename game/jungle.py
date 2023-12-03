@@ -1,6 +1,9 @@
 import random
 import os
 
+# Hope we can use this
+from jungle_lists import directionOutputs
+
 # Global variables
 def initializeGlobals():
     
@@ -8,9 +11,14 @@ def initializeGlobals():
     global firstTime
     firstTime = True
 
-    # Global variable to count the number of times the player has traveled
+    # Global variables to count the number of times the player has traveled in each direction
+    global northCounter, southCounter, eastCounter, westCounter
+    northCounter = southCounter = eastCounter = westCounter = 0
+    
+    # travelCounter to check the player's location for testing should take out later yo
     global travelCounter
     travelCounter = 0
+
 
     # Global variable to check if it is the first time the player has entered the savannah
     global firstTimeSavannah
@@ -68,18 +76,69 @@ def getplayerInput():
 
 
 def containsAll(str1, str2):
-    # Checks if str1 contains all the letters in str2 to check for playerInput even if the player misspells it
+    # Checks if str1 contains all the letters in str2 to check if playerInput works even if the player misspells it
     for letter in str1:
         if letter not in str2:
             return False
     return True
 
+# If we have to have only one file we can uncomment this and delete the import and jungle_lists.py file
+'''
+def directionOutputs():
+    northOutputs = [
+        "Heading north towards the savannah.",
+        "In the distance, the vast savannah awaits to the north.",
+        "Towards the north lies the expansive savannah.",
+        "Heading northward, the savannah comes into view.",
+        "The journey leads north, revealing the open savannah.",
+        "To the north, the landscape transitions into a sprawling savannah.",
+        "The northern horizon reveals the beauty of the savannah."
+    ]
 
+    southOutputs = [
+        "Heading south towards the endless ocean.",
+        "In the distance, the boundless ocean awaits to the south.",
+        "Towards the south lies the vast expanse of the ocean.",
+        "Heading southward, the ocean unfolds in the distance.",
+        "The journey leads south, revealing the vastness of the ocean.",
+        "To the south, the landscape gives way to the expansive ocean.",
+        "The southern horizon showcases the endless beauty of the ocean."
+    ]
+
+    eastOutputs = [
+        "Heading east towards the expansive desert.",
+        "In the distance, the vast desert stretches out to the east.",
+        "Towards the east lies the endless expanse of the desert.",
+        "Heading eastward, the desert unfolds in the distance.",
+        "The journey leads east, revealing the arid beauty of the desert.",
+        "To the east, the landscape transforms into an expansive desert.",
+        "The eastern horizon unveils the beauty of the vast desert."
+    ]
+
+    westOutputs = [
+        "Heading west towards the towering mountains.",
+        "In the distance, the majestic mountains rise to the west.",
+        "Towards the west, the towering mountains stand tall.",
+        "Heading westward, the mountains come into view.",
+        "The journey leads west, revealing the grandeur of the mountains.",
+        "To the west, the landscape ascends into the majestic mountains.",
+        "The western horizon showcases the beauty of the towering mountains."
+    ]
+    
+    return {"north": northOutputs, "south": southOutputs, "east": eastOutputs, "west": westOutputs}
+'''
 
 def getCommand(playerInput):
+    
+    # calls the global variables
+    global northCounter, southCounter, eastCounter, westCounter
+    
     # Conversion to lowercase
     playerInput = playerInput.lower()
-
+    
+    # Calls directionOutputs() and assigns it to direction
+    direction = directionOutputs()
+    
     if containsAll("quit", playerInput) or playerInput == "q":
         clearScreen()
         # Prints the quit message which is different from the death message
@@ -87,44 +146,70 @@ def getCommand(playerInput):
         return False
     
 
-# 1 in 5 chance to trigger the mini-game should be able to just change the 0 of 0, 4 to 1 for other mini-games
-# this is dumb what was i thinking 🤦
+    # 1 in 5 chance to trigger the mini-game should be able to just change the 0 of 0, 4 to 1 for other mini-games
+    # this is dumb what was i thinking 🤦
 
+    # Changed to 1 in 10 chance to trigger the mini-game so its more rare
+    
     elif containsAll("nor", playerInput) or playerInput == "n":
-        if random.randint(0, 4) == 0:  # 1 in 5 chance to trigger mini-game
+        # Adds 1 to the northCounter
+        northCounter += 1
+        if random.randint(0, 9) == 0:  # 1 in 10 chance to trigger mini-game
 
             # Runs mini-game and checks environment to run the correct mini-game
             return miniGame(environment)
         # Clears the screen using os module
         clearScreen()
-        print("You go north.")
+        # dont forget the f for an f string
+        
+        # test for northCounter
+        print(f"north test {northCounter} ")
+        print(random.choice(direction["north"]))
 
     elif containsAll("sou", playerInput) or playerInput == "s":
-        if random.randint(0, 4) == 0:  # 1 in 5 chance to trigger the mini-game
+        # Adds 1 to the southCounter
+        southCounter += 1
+        if random.randint(0, 9) == 0:  # 1 in 10 chance to trigger the mini-game
 
             # Runs mini-game and checks environment to run the correct mini-game
             return miniGame(environment)
+        
         # Clears the screen using os module
         clearScreen()
-        print("You go south.")
+        
+        # test for southCounter
+        print(f"south test {southCounter} ")
+        print(random.choice(direction["south"]))# Prints a random output from the list
 
     elif containsAll("eas", playerInput) or playerInput == "e":
-        if random.randint(0, 4) == 0:  # 1 in 5 chance to trigger the mini-game
+        # Adds 1 to the eastCounter
+        eastCounter += 1
+        if random.randint(0, 9) == 0:  # 1 in 10 chance to trigger the mini-game
 
             # Runs mini-game and checks environment to run the correct mini-game
             return miniGame(environment)
+        
         # Clears the screen using os module
         clearScreen()
-        print("You go east.")
+        
+        # test for eastCounter
+        print(f"east test {eastCounter} ")
+        print(random.choice(direction["east"])) # Prints a random output from the list
 
     elif containsAll("wes", playerInput) or playerInput == "w":
-        if random.randint(0, 4) == 0:  # 1 in 5 chance to trigger the mini-game
+        # Adds 1 to the westCounter
+        westCounter += 1
+        if random.randint(0, 9) == 0:  # 1 in 10 chance to trigger the mini-game
 
             # Runs mini-game and checks environment to run the correct mini-game
             return miniGame(environment)
+        
         # Clears the screen using os module
         clearScreen()
-        print("You go west.")
+        
+        # test for westCounter
+        print(f"west test {westCounter} ")
+        print(random.choice(direction["west"])) # Prints a random output from the list
 
     # Its an easter egg ya dingus
     elif containsAll("supersecretsecret", playerInput):
@@ -266,3 +351,7 @@ main()
 # TODO make a river mini-game
 # TODO make a mini-game that you need to run away from da ferrel monke
 # TODO make a mini-game that you need to fight da ferrel monke
+
+
+
+# TODO Left off working on ints for every direction of travel
