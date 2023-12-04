@@ -20,9 +20,9 @@ def initializeGlobals():
     travelCounter = 0
 
 
-    # Global variable to check if it is the first time the player has entered the savannah
-    global firstTimeSavannah
-    firstTimeSavannah = True
+    # Global variable to check if it is the first time the player has entered the savanna
+    global firstTimeSavanna
+    firstTimeSavanna = True
     
     # Global environment variable to init the player's location
     global environment
@@ -47,7 +47,7 @@ clearScreen()
 def getplayerInput():
 
     # Does not print the first time the main loop runs
-    global firstTime, travelCounter, firstTimeSavannah, environment
+    global firstTime, travelCounter, firstTimeSavanna, environment
     if not firstTime:
         # travelCounter += 1
         # travelCounter to check the player's location for testing should take out later yo
@@ -56,12 +56,12 @@ def getplayerInput():
             environment = 'jungle'
             print("You are still in a jungle.")
         else:
-            if firstTimeSavannah:
-                environment = 'savannah'
-                print("You are now in a savannah.")
-                firstTimeSavannah = False
+            if firstTimeSavanna:
+                environment = 'savanna'
+                print("You are now in a savanna.")
+                firstTimeSavanna = False
             else:
-                print("You are still in a savannah.")        
+                print("You are still in a savanna.")        
         print("You can go north, south, east, or west.")
         print("You can also quit.")
         print("What do you want to do?")
@@ -86,13 +86,13 @@ def containsAll(str1, str2):
 '''
 def directionOutputs():
     northOutputs = [
-        "Heading north towards the savannah.",
-        "In the distance, the vast savannah awaits to the north.",
-        "Towards the north lies the expansive savannah.",
-        "Heading northward, the savannah comes into view.",
-        "The journey leads north, revealing the open savannah.",
-        "To the north, the landscape transitions into a sprawling savannah.",
-        "The northern horizon reveals the beauty of the savannah."
+        "Heading north towards the savanna.",
+        "In the distance, the vast savanna awaits to the north.",
+        "Towards the north lies the expansive savanna.",
+        "Heading northward, the savanna comes into view.",
+        "The journey leads north, revealing the open savanna.",
+        "To the north, the landscape transitions into a sprawling savanna.",
+        "The northern horizon reveals the beauty of the savanna."
     ]
 
     southOutputs = [
@@ -235,8 +235,8 @@ def miniGame(environment):
     if environment == 'jungle':
         print("You have encountered a jungle temple! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you dare to enter?  (yes/no)")
     
-    elif environment == 'savannah':
-        print("You have encountered a savannah Oasis! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you take the plunge?  (yes/no)") 
+    elif environment == 'savanna':
+        print("You have encountered a savanna Oasis! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you take the plunge?  (yes/no)") 
     
     # Player input
     while True:
@@ -254,8 +254,8 @@ def miniGame(environment):
                 print("You have encountered a jungle temple! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you dare to enter?  (yes/no)")
             
             # Makes the text stay the same even if the player enters something other than yes or no
-            elif environment == 'savannah':
-                print("You have encountered a savannah Oasis! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you take the plunge?  (yes/no)") 
+            elif environment == 'savanna':
+                print("You have encountered a savanna Oasis! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you take the plunge?  (yes/no)") 
             
             # Exception handling for wrong input
             print("Please enter Y/n.")    
@@ -355,5 +355,3 @@ main()
 
 
 # TODO Left off working on ints for every direction of travel
-
-# Pull test
