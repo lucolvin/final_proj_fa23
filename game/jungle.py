@@ -2,7 +2,7 @@ import random
 import os
 
 # Hope we can use this
-from jungle_lists import directionOutputs
+# from jungle_lists import directionOutputs
 
 # Global variables
 def initializeGlobals():
@@ -24,7 +24,7 @@ def initializeGlobals():
     global firstTimeSavanna
     firstTimeSavanna = True
     
-    # Global environment variable to init the player's location
+    # Global environment variable to init the player's location to jungle
     global environment
     environment = 'jungle'
 
@@ -45,23 +45,30 @@ clearScreen()
 
 # Gets the player's playerInput
 def getplayerInput():
-
+    
     # Does not print the first time the main loop runs
-    global firstTime, travelCounter, firstTimeSavanna, environment
+    global firstTime, northCounter, southCounter, eastCounter, westCounter, environment
     if not firstTime:
-        # travelCounter += 1
         # travelCounter to check the player's location for testing should take out later yo
-        print(f"\nYou have traveled {travelCounter} times.\n")
-        if travelCounter <= 20:
-            environment = 'jungle'
-            print("You are still in a jungle.")
+        print(f"\nYou have traveled {northCounter + southCounter + eastCounter + westCounter} times.\n")
+        
+        # Checks if the player has traveled 20 times in a direction using a conditional statement to move between environments
+        if northCounter - southCounter >= 20:
+            environment = 'savanna'
+            print("You are now in the savanna.")
+        
+        # 
+        elif southCounter - northCounter >= 20:
+            environment = 'ocean'
+            print("You are now in the ocean.")
+        elif eastCounter - westCounter >= 20:
+            environment = 'dessert'
+            print("You are now in the dessert.")
+        elif westCounter - eastCounter >= 20:
+            environment = 'mountains'
+            print("You are now in the mountains.")
         else:
-            if firstTimeSavanna:
-                environment = 'savanna'
-                print("You are now in a savanna.")
-                firstTimeSavanna = False
-            else:
-                print("You are still in a savanna.")        
+            print("You are still in a jungle.")        
         print("You can go north, south, east, or west.")
         print("You can also quit.")
         print("What do you want to do?")
@@ -69,8 +76,8 @@ def getplayerInput():
 
     # Player input uses strip to remove whitespace
     playerInput = input("> ").strip()
-    if playerInput: # Fix so travelCounter does not increase when the player enters nothing
-        travelCounter += 1
+    #if playerInput: # Fix so travelCounter does not increase when the player enters nothing
+        #travelCounter += 1
     return playerInput
 
 
@@ -82,22 +89,21 @@ def containsAll(str1, str2):
             return False
     return True
 
-# If we have to have only one file we can uncomment this and delete the import and jungle_lists.py file
-'''
+# List of outputs for each direction
 def directionOutputs():
     northOutputs = [
-        "Heading north towards the savanna.",
-        "In the distance, the vast savanna awaits to the north.",
-        "Towards the north lies the expansive savanna.",
-        "Heading northward, the savanna comes into view.",
-        "The journey leads north, revealing the open savanna.",
-        "To the north, the landscape transitions into a sprawling savanna.",
-        "The northern horizon reveals the beauty of the savanna."
+        "Heading north towards the savannah.",
+        "In the distance, the vast savannah awaits.",
+        "Towards the north lies the expansive savannah.",
+        "Heading northward, the savannah comes into view.",
+        "The journey leads north, revealing the open savannah.",
+        "To the north, the landscape transitions into a sprawling savannah.",
+        "The northern horizon reveals the beauty of the savannah."
     ]
 
     southOutputs = [
         "Heading south towards the endless ocean.",
-        "In the distance, the boundless ocean awaits to the south.",
+        "In the distance, the boundless ocean awaits.",
         "Towards the south lies the vast expanse of the ocean.",
         "Heading southward, the ocean unfolds in the distance.",
         "The journey leads south, revealing the vastness of the ocean.",
@@ -124,13 +130,14 @@ def directionOutputs():
         "To the west, the landscape ascends into the majestic mountains.",
         "The western horizon showcases the beauty of the towering mountains."
     ]
-    
+    # Returns a dictionary with the outputs for each direction
+    # Its a dictionary yo
     return {"north": northOutputs, "south": southOutputs, "east": eastOutputs, "west": westOutputs}
-'''
+
 
 def getCommand(playerInput):
     
-    # calls the global variables
+    # calls the global variables for the directions
     global northCounter, southCounter, eastCounter, westCounter
     
     # Conversion to lowercase
@@ -163,7 +170,7 @@ def getCommand(playerInput):
         # dont forget the f for an f string
         
         # test for northCounter
-        print(f"north test {northCounter} ")
+        print(f"north test {northCounter - southCounter} ")
         print(random.choice(direction["north"]))
 
     elif containsAll("sou", playerInput) or playerInput == "s":
@@ -178,7 +185,7 @@ def getCommand(playerInput):
         clearScreen()
         
         # test for southCounter
-        print(f"south test {southCounter} ")
+        print(f"south test {southCounter - northCounter} ")
         print(random.choice(direction["south"]))# Prints a random output from the list
 
     elif containsAll("eas", playerInput) or playerInput == "e":
@@ -193,7 +200,7 @@ def getCommand(playerInput):
         clearScreen()
         
         # test for eastCounter
-        print(f"east test {eastCounter} ")
+        print(f"east test {eastCounter - westCounter} ")
         print(random.choice(direction["east"])) # Prints a random output from the list
 
     elif containsAll("wes", playerInput) or playerInput == "w":
@@ -208,7 +215,7 @@ def getCommand(playerInput):
         clearScreen()
         
         # test for westCounter
-        print(f"west test {westCounter} ")
+        print(f"west test {westCounter - eastCounter} ")
         print(random.choice(direction["west"])) # Prints a random output from the list
 
     # Its an easter egg ya dingus
@@ -293,12 +300,19 @@ def miniGame(environment):
                     print("Please enter a number from 1 to 3.")
                 
     
-    # Checks if the player does not want to play the mini-game
-    elif playGame.lower() in ['no', 'n']:
+    # Checks if the player does not want to play the mini-game when in the jungle
+    elif playGame.lower() in ['no', 'n'] and environment == 'jungle':
         # Clears the screen using os module
         clearScreen()
         print("You stumble around the jungle temple and get lost.")
         return True # Game continue
+    
+    # Checks if the player does not want to play the mini-game when in the savanna
+    elif playGame.lower() in ['no', 'n'] and environment == 'savanna':
+        # Clears the screen using os module
+        clearScreen()
+        print("You realize the oasis is a mirage and continue on your journey.")
+        return True
     
     # Clears the screen using os module
     clearScreen()
@@ -355,3 +369,5 @@ main()
 
 
 # TODO Left off working on ints for every direction of travel
+
+# Pull test v2 for the win
