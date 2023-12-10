@@ -5,31 +5,17 @@ import os
 # from jungle_lists import directionOutputs
 
 # Global variables
-def initializeGlobals():
-    
-    # Global variable to check if it is the first time the main loop runs
-    global firstTime
-    firstTime = True
-
-    # Global variables to count the number of times the player has traveled in each direction
-    global northCounter, southCounter, eastCounter, westCounter
-    northCounter = southCounter = eastCounter = westCounter = 0
-    
-    # travelCounter to check the player's location for testing should take out later yo
-    global travelCounter
-    travelCounter = 0
-
-
-    # Global variable to check if it is the first time the player has entered the savanna
-    global firstTimeSavanna
-    firstTimeSavanna = True
-    
-    # Global environment variable to init the player's location to jungle
-    global environment
-    environment = 'jungle'
-
-# Call initializeGlobals() to init the global variables
-initializeGlobals()
+class Game:
+    def __init__(self):
+        self.firstTime = True
+        self.northCounter = 0
+        self.southCounter = 0
+        self.eastCounter = 0
+        self.westCounter = 0
+        self.travelCounter = 0
+        self.firstTimeSavanna = True
+        self.environment = 'jungle'
+game = Game()
 
 
 
@@ -44,40 +30,40 @@ clearScreen()
 
 
 # Gets the player's playerInput
-def getplayerInput():
+def getPlayerInput(game):
     
     # Does not print the first time the main loop runs
-    global firstTime, northCounter, southCounter, eastCounter, westCounter, environment
-    if not firstTime:
+    #firstTime, , southCounter, eastCounter, westCounter, environment
+    if not game.firstTime:
         # travelCounter to check the player's location for testing should take out later yo
-        print(f"\nYou have traveled {northCounter + southCounter + eastCounter + westCounter} times.\n")
+        print(f"\nYou have traveled {game.travelCounter} times.\n")
         
         # Checks if the player has traveled 20 times in a direction using a conditional statement to move between environments
-        if northCounter - southCounter >= 20:
-            environment = 'savanna'
-            print("You are now in the savanna.")
+        if game.northCounter - game.southCounter >= 20:
+            game.environment = 'savanna'
+            print("You are in a savanna.")
         
         # 
-        elif southCounter - northCounter >= 20:
-            environment = 'ocean'
-            print("You are now in the ocean.")
-        elif eastCounter - westCounter >= 20:
-            environment = 'dessert'
-            print("You are now in the dessert.")
-        elif westCounter - eastCounter >= 20:
-            environment = 'mountains'
-            print("You are now in the mountains.")
+        elif game.southCounter - game.northCounter >= 20:
+            game.environment = 'ocean'
+            print("You are in a ocean.")
+        elif game.eastCounter - game.westCounter >= 20:
+            game.environment = 'dessert'
+            print("You are in a dessert.")
+        elif game.westCounter - game.eastCounter >= 20:
+            game.environment = 'mountains'
+            print("You are in a mountains.")
         else:
             print("You are still in a jungle.")        
         print("You can go north, south, east, or west.")
         print("You can also quit.")
         print("What do you want to do?")
-    firstTime = False
+    game.firstTime = False
 
     # Player input uses strip to remove whitespace
     playerInput = input("> ").strip()
-    #if playerInput: # Fix so travelCounter does not increase when the player enters nothing
-        #travelCounter += 1
+    if playerInput: # Fix so travelCounter does not increase when the player enters nothing
+        game.travelCounter += 1
     return playerInput
 
 
@@ -138,7 +124,7 @@ def directionOutputs():
 def getCommand(playerInput):
     
     # calls the global variables for the directions
-    global northCounter, southCounter, eastCounter, westCounter
+    #global northCounter, southCounter, eastCounter, westCounter
     
     # Conversion to lowercase
     playerInput = playerInput.lower()
@@ -160,62 +146,65 @@ def getCommand(playerInput):
     
     elif containsAll("nor", playerInput) or playerInput == "n":
         # Adds 1 to the northCounter
-        northCounter += 1
+        game.northCounter += 1
         if random.randint(0, 9) == 0:  # 1 in 10 chance to trigger mini-game
 
             # Runs mini-game and checks environment to run the correct mini-game
-            return miniGame(environment)
+            return miniGame(game)
         # Clears the screen using os module
         clearScreen()
         # dont forget the f for an f string
         
         # test for northCounter
-        print(f"north test {northCounter - southCounter} ")
+        print(f"north test {game.northCounter - game.southCounter} ")
         print(random.choice(direction["north"]))
 
     elif containsAll("sou", playerInput) or playerInput == "s":
         # Adds 1 to the southCounter
-        southCounter += 1
-        if random.randint(0, 9) == 0:  # 1 in 10 chance to trigger the mini-game
+        game.southCounter += 1
+        # 1 in 10 chance to trigger mini-game
+        if random.randint(0, 9) == 0:
 
             # Runs mini-game and checks environment to run the correct mini-game
-            return miniGame(environment)
+            return miniGame(game)
         
         # Clears the screen using os module
         clearScreen()
         
         # test for southCounter
-        print(f"south test {southCounter - northCounter} ")
+        print(f"south test {game.southCounter - game.northCounter} ")
         print(random.choice(direction["south"]))# Prints a random output from the list
 
     elif containsAll("eas", playerInput) or playerInput == "e":
         # Adds 1 to the eastCounter
-        eastCounter += 1
-        if random.randint(0, 9) == 0:  # 1 in 10 chance to trigger the mini-game
+        game.eastCounter += 1
+        # 1 in 10 chance to trigger mini-game
+        if random.randint(0, 9) == 0:
 
             # Runs mini-game and checks environment to run the correct mini-game
-            return miniGame(environment)
+            return miniGame(game)
         
         # Clears the screen using os module
         clearScreen()
         
         # test for eastCounter
-        print(f"east test {eastCounter - westCounter} ")
+        print(f"east test {game.eastCounter - game.westCounter} ")
         print(random.choice(direction["east"])) # Prints a random output from the list
 
     elif containsAll("wes", playerInput) or playerInput == "w":
         # Adds 1 to the westCounter
-        westCounter += 1
-        if random.randint(0, 9) == 0:  # 1 in 10 chance to trigger the mini-game
+        game.westCounter += 1
+        # 1 in 10 chance to trigger mini-game
+        if random.randint(0, 9) == 0:
 
             # Runs mini-game and checks environment to run the correct mini-game
-            return miniGame(environment)
+            return miniGame(game)
         
         # Clears the screen using os module
         clearScreen()
         
         # test for westCounter
-        print(f"west test {westCounter - eastCounter} ")
+        print(f"west test {game.westCounter - game.eastCounter} ")
         print(random.choice(direction["west"])) # Prints a random output from the list
 
     # Its an easter egg ya dingus
@@ -233,16 +222,16 @@ def getCommand(playerInput):
 
 
 # Jungle temple mini-game
-def miniGame(environment):
+def miniGame(game):
     # Clears the screen using os module
     clearScreen()
 
     
     # Mini-game introduction
-    if environment == 'jungle':
+    if game.environment == 'jungle':
         print("You have encountered a jungle temple! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you dare to enter?  (yes/no)")
     
-    elif environment == 'savanna':
+    elif game.environment == 'savanna':
         print("You have encountered a savanna Oasis! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you take the plunge?  (yes/no)") 
     
     # Player input
@@ -257,11 +246,11 @@ def miniGame(environment):
             clearScreen()
             
             # Makes the text stay the same even if the player enters something other than yes or no
-            if environment == 'jungle':
+            if game.environment == 'jungle':
                 print("You have encountered a jungle temple! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you dare to enter?  (yes/no)")
             
             # Makes the text stay the same even if the player enters something other than yes or no
-            elif environment == 'savanna':
+            elif game.environment == 'savanna':
                 print("You have encountered a savanna Oasis! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you take the plunge?  (yes/no)") 
             
             # Exception handling for wrong input
@@ -301,14 +290,14 @@ def miniGame(environment):
                 
     
     # Checks if the player does not want to play the mini-game when in the jungle
-    elif playGame.lower() in ['no', 'n'] and environment == 'jungle':
+    elif playGame.lower() in ['no', 'n'] and game.environment == 'jungle':
         # Clears the screen using os module
         clearScreen()
         print("You stumble around the jungle temple and get lost.")
         return True # Game continue
     
     # Checks if the player does not want to play the mini-game when in the savanna
-    elif playGame.lower() in ['no', 'n'] and environment == 'savanna':
+    elif playGame.lower() in ['no', 'n'] and game.environment == 'savanna':
         # Clears the screen using os module
         clearScreen()
         print("You realize the oasis is a mirage and continue on your journey.")
@@ -329,6 +318,7 @@ def miniGame(environment):
 
 
 def main():
+    game = Game()
     # Prints only the first time the main loop runs
     print("thus begins your adventure")
     print("you are in a jungle")
@@ -338,9 +328,9 @@ def main():
     # Main loop
     while True:
         # Calls getPlayerInput() and assigns it to playerInput
-        playerInput = getplayerInput()
+        playerInput = getPlayerInput(game)
         # Ends the game if the player has traveled 100 times
-        if travelCounter >= 99:
+        if game.travelCounter >= 99:
             # Clears the screen using os module
             clearScreen()
             # I was gonna say you won but thought it would be funnier to say you died of exhaustion
@@ -372,4 +362,4 @@ main()
 
 # TODO Left off working on ints for every direction of travel
 
-# Pull test v2 for the win
+# TODO make a mini-game that only appears when the player goes a certain direction
