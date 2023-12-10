@@ -13,8 +13,28 @@ class Game:
         self.eastCounter = 0
         self.westCounter = 0
         self.travelCounter = 0
-        self.firstTimeSavanna = True
+        self.score = 0
+        self.multiplier = 1
+        # self.firstTimeSavanna = True
+        self.miniGameScore = 0
         self.environment = 'jungle'
+        
+    def increaseMultiplier(self):
+        self.multiplier += 10
+        return self.multiplier
+    
+    def decreaseMultiplier(self):
+        if self.multiplier > 1:
+            self.multiplier -= 1
+        return self.multiplier
+    
+    def updateScore(self, points):
+        self.score += points * self.multiplier
+        self.miniGameScore += points # updates the miniGameScore
+        
+    def getMiniGameScore(self):
+        return self.getMiniGameScore
+    
 game = Game()
 
 
@@ -40,10 +60,9 @@ def getPlayerInput(game):
         
         # Checks if the player has traveled 20 times in a direction using a conditional statement to move between environments
         if game.northCounter - game.southCounter >= 20:
+            print(game.northCounter - game.southCounter)
             game.environment = 'savanna'
             print("You are in a savanna.")
-        
-        # 
         elif game.southCounter - game.northCounter >= 20:
             game.environment = 'ocean'
             print("You are in a ocean.")
@@ -306,17 +325,31 @@ def miniGame(game):
     # Clears the screen using os module
     clearScreen()
 
-    # Prints the mini-game win message
-    print("You survived the jungle temple and rescued the golden idol.")
+     # Prints the mini-game win message
+    game.increaseMultiplier()
+    miniGameScore = 50  # You can adjust this based on the difficulty or complexity of the mini-game
+    print(f"You survived the jungle temple and rescued the golden idol. You earned {miniGameScore} points.")
+
+    # Updates the overall game score and mini-game score
+    game.updateScore(miniGameScore)
 
     # Prints the return message
     print("You return to the jungle.")
     print("\n" * 1)
+    print(f"\nMini-Game Score: {game.getMiniGameScore()}")  # Print mini-game score for verification
     return True
 
 
+def score(game):
+    # Updates the score based on the multiplier
+    game.score += 1
+    print(f"Score: {game.score * game.multiplier}")
 
+    # Display mini-game score
+    miniGameScore = game.getMiniGameScore
+    print(f"Mini-Game Score: {miniGameScore}")
 
+    
 def main():
     game = Game()
     # Prints only the first time the main loop runs
@@ -327,6 +360,9 @@ def main():
     
     # Main loop
     while True:
+        game = Game()
+        print(game.environment)
+        score(game)
         # Calls getPlayerInput() and assigns it to playerInput
         playerInput = getPlayerInput(game)
         # Ends the game if the player has traveled 100 times
@@ -335,6 +371,7 @@ def main():
             clearScreen()
             # I was gonna say you won but thought it would be funnier to say you died of exhaustion
             print("You have traveled too far and died of exhaustion.")
+            print(f"your total score is: {game.score * 10}")
             break
         if not getCommand(playerInput):
             break
