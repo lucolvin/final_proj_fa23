@@ -2,10 +2,8 @@ import random
 import os
 import time
 
-# Hope we can use this
-# from jungle_lists import directionOutputs
 
-# Global variables
+# Class for initializing the game variables
 class Game:
     def __init__(self):
         self.northCounter = 0
@@ -37,9 +35,6 @@ def getPlayerInput(game):
     # Fix so travelCounter does not increase when the player enters nothing
 
     return playerInput
-
-
-
 
 
 def containsAll(str1, str2):
@@ -121,13 +116,14 @@ def getCommand(playerInput):
         game.northCounter += 1
         if random.randint(0, 9) == 0:  # 1 in 10 chance to trigger mini-game
 
-            # Runs mini-game and checks environment to run the correct mini-game
+            # Runs mini-game
             return miniGame(game)
+        
+        # Added mini game that is non-deadly and only apears when traveling north
         elif random.randint(0, 9) == 1:
             hangman()
         # Clears the screen using os module
         clearScreen()
-        # dont forget the f for an f string
         
         print(random.choice(direction["north"]))
 
@@ -137,7 +133,7 @@ def getCommand(playerInput):
         # 1 in 10 chance to trigger mini-game
         if random.randint(0, 9) == 0:
 
-            # Runs mini-game and checks environment to run the correct mini-game
+            # Runs mini-game
             return miniGame(game)
         
         # Clears the screen using os module
@@ -151,7 +147,7 @@ def getCommand(playerInput):
         # 1 in 10 chance to trigger mini-game
         if random.randint(0, 9) == 0:
 
-            # Runs mini-game and checks environment to run the correct mini-game
+            # Runs mini-game
             return miniGame(game)
         
         # Clears the screen using os module
@@ -165,7 +161,7 @@ def getCommand(playerInput):
         # 1 in 10 chance to trigger mini-game
         if random.randint(0, 9) == 0:
 
-            # Runs mini-game and checks environment to run the correct mini-game
+            # Runs mini-game
             return miniGame(game)
         
         # Clears the screen using os module
@@ -197,8 +193,6 @@ def miniGame(game):
     if game.environment == 'jungle':
         print("You have encountered a jungle temple! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you dare to enter?  (yes/no)")
     
-    # elif game.environment == 'savanna':
-    #     print("You have encountered a savanna Oasis! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you take the plunge?  (yes/no)") 
     
     # Player input
     while True:
@@ -215,10 +209,7 @@ def miniGame(game):
             if game.environment == 'jungle':
                 print("You have encountered a jungle temple! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you dare to enter?  (yes/no)")
             
-            # Makes the text stay the same even if the player enters something other than yes or no
-            elif game.environment == 'savanna':
-                print("You have encountered a savanna Oasis! \n\nThe rewards are great but the perils are many.\nOnce you enter you must survive or die.\n\nDo you take the plunge?  (yes/no)") 
-            
+
             # Exception handling for wrong input
             print("Please enter Y/n.")    
             
@@ -255,19 +246,12 @@ def miniGame(game):
                     print("Please enter a number from 1 to 3.")
                 
     
-    # Checks if the player does not want to play the mini-game when in the jungle
+    # Checks if the player does not want to play the mini-game
     elif playGame.lower() in ['no', 'n'] and game.environment == 'jungle':
         # Clears the screen using os module
         clearScreen()
         print("You stumble around the jungle temple and get lost.")
         return True # Game continue
-    
-    # Checks if the player does not want to play the mini-game when in the savanna
-    elif playGame.lower() in ['no', 'n'] and game.environment == 'savanna':
-        # Clears the screen using os module
-        clearScreen()
-        print("You realize the oasis is a mirage and continue on your journey.")
-        return True
     
     # Clears the screen using os module
     clearScreen()
@@ -357,5 +341,3 @@ def main():
 
 
 main()
-
-
