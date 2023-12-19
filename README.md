@@ -56,6 +56,4 @@ The `main()` function initiates the main game loop, providing initial instructio
 
 The program includes error handling for non-string and non-integer inputs. It offers visual cues for player choices and provides feedback messages for invalid input.
 
-## Time and Challenges
 
----
