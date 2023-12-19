@@ -4,7 +4,8 @@
 
 **Authors:** Luke Colvin, Devin Kagak  
 **Institution:** Olivet Nazarene University  
-**Professor:** Professor Kender  
+**Professor:** Daniel Kender
+
 **Date:** December 11, 2023
 
 ## Functional Specifications
